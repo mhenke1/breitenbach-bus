@@ -14,7 +14,8 @@
     "bluebird": "^3.5.0",
     "cfenv": "^1.0.x",
     "express": "^4.15.x",
-    "node-cache": "^4.1.1"
+    "node-cache": "^4.1.1",
+    "request": "^2.81.0"
   },
   "author": "Martin Henke"
 }

@@ -1,11 +1,10 @@
 'use strict';
 
-var express = require("express");
-var app = express();
-var cfenv = require("cfenv");
-var request = require("request");
-var Promise = require("bluebird")
-var request = Promise.promisify(require("request"));
+let express = require("express");
+let app = express();
+let cfenv = require("cfenv");
+let Promise = require("bluebird")
+let request = Promise.promisify(require("request"));
 const NodeCache = require("node-cache");
 const departureCache = new NodeCache( { stdTTL: 60, checkperiod: 120 } );;
 
@@ -17,15 +16,14 @@ function extractTime(departure) {
 }
 
 function extractDepartures(departuresList) {
-  var departures = new Map();
-  departuresList.forEach(departure => {
-    if (!departures.get('7') && departure.servingLine.number == '7') {
-      departures.set('7', extractTime(departure))
-    }
-    if (!departures.get('2') && departure.servingLine.number == '2') {
-      departures.set('2', extractTime(departure))
-    }
-  })
+  let departures = new Map();
+  let line2Deps = departuresList.filter((dep) => (dep.servingLine.number == '2'))
+    .slice(0,2).map((dep) => extractTime(dep)).join(' ');
+  departures.set('2', line2Deps);  
+  let line7Deps = departuresList.filter((dep) => (dep.servingLine.number == '7'))
+    .slice(0,2).map((dep) => extractTime(dep)).join(' ');
+  departures.set('7', line7Deps);
+  
   return departures;
 }
 
@@ -40,11 +38,11 @@ function getDepartures() {
           {
             "frames": [
               {
-                "text": "Linie 2: " + departures.get('2'),
+                "text": "Linie 2 " + departures.get('2'),
                 "icon": "a6175"
               },
               {
-                "text": "Linie 7: " + departures.get('7'),
+                "text": "Linie 7 " + departures.get('7'),
                 "icon": "a6175"
               }
             ]
@@ -86,7 +84,7 @@ app.get("/departures", function (request, response) {
 });
 
 // load local VCAP configuration  and service credentials
-var vcapLocal;
+let vcapLocal;
 try {
   vcapLocal = require('./vcap-local.json');
   console.log("Loaded local VCAP", vcapLocal);
@@ -95,7 +93,7 @@ try {
 const appEnvOpts = vcapLocal ? { vcap: vcapLocal} : {}
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 
-var port = process.env.PORT || 3000
+let port = process.env.PORT || 3000
 app.listen(port, function() {
     console.log("To view your app, open this link in your browser: http://localhost:" + port);
 });
