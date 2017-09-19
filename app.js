@@ -38,12 +38,12 @@ function getDepartures() {
           {
             "frames": [
               {
-                "text": "Linie 2 " + departures.get('2'),
+                "text": "2 " + departures.get('2'),
                 "icon": "a6175",
                 "index":0
               },
               {
-                "text": "Linie 7 " + departures.get('7'),
+                "text": "7 " + departures.get('7'),
                 "icon": "a6175",
                 "index":1
               }
