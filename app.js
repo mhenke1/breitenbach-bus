@@ -39,26 +39,17 @@ function getDepartures() {
             "frames": [
               {
                 "text": "Linie 2 " + departures.get('2'),
-                "icon": "a6175"
+                "icon": "a6175",
+                "index":0
               },
               {
                 "text": "Linie 7 " + departures.get('7'),
-                "icon": "a6175"
+                "icon": "a6175",
+                "index":1
               }
             ]
           })
       })
-      .catch(error => 
-        resolve(
-          {
-            "frames": [
-              {
-                "text": "Error",
-                "icon": "a6175"
-              }
-            ]
-          }))
-
 })}
 
 app.get("/departures", function (request, response) {
@@ -68,15 +59,16 @@ app.get("/departures", function (request, response) {
     getDepartures()
     .then(result => {
       departureCache.set('departures', result);
-      response.send(result);
+      response.json(result);
     })
     .catch(error => 
-      response.send(
+      response.json(
         {
           "frames": [
             {
               "text": "Error",
-              "icon": "a6175"
+              "icon": "a6175",
+              "index":0
             }
           ]
         }))
