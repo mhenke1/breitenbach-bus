@@ -1,18 +1,22 @@
 'use strict';
 
-let express = require("express");
+let express = require('express');
 let app = express();
-let cfenv = require("cfenv");
-let Promise = require("bluebird")
-let request = Promise.promisify(require("request"));
-const NodeCache = require("node-cache");
+let cfenv = require('cfenv');
+let Promise = require('bluebird')
+let request = Promise.promisify(require('request'));
+const NodeCache = require('node-cache');
 const departureCache = new NodeCache( { stdTTL: 60, checkperiod: 120 } );;
 
-const requestString = "http://efa2.naldo.de/naldo/XSLT_DM_REQUEST?language=de&useRealtime=1&mode=direct&type_dm=stop&name_dm=${%20Reutlingen%20}%20${%20Breitenbach%20}&mId=efa_rc2&outputFormat=JSON&line=tub:07002:%20:H:j17&line=tub:07007:%20:R:j17&limit=10;"
+const requestString = 'http://efa2.naldo.de/naldo/XSLT_DM_REQUEST?language=de&useRealtime=1&mode=direct&type_dm=stop&name_dm=${%20Reutlingen%20}%20${%20Breitenbach%20}&mId=efa_rc2&outputFormat=JSON&line=tub:07002:%20:H:j17&line=tub:07007:%20:R:j17&limit=10;'
 
 function extractTime(departure) {
   let depTime = departure.realDateTime || departure.dateTime
-  return depTime.hour + ":" + depTime.minute
+  let minute = depTime.minute;
+  if (minute.length == 1) {
+    minute = '0' + minute;
+  }
+  return depTime.hour + ':' + minute
 }
 
 function extractDepartures(departuresList) {
@@ -36,23 +40,23 @@ function getDepartures() {
         let departures = extractDepartures(answer.departureList)
         resolve(
           {
-            "frames": [
+            'frames': [
               {
-                "text": "2 " + departures.get('2'),
-                "icon": "a6175",
-                "index":0
+                'text': '2 ' + departures.get('2'),
+                'icon': 'a6175',
+                'index':0
               },
               {
-                "text": "7 " + departures.get('7'),
-                "icon": "a6175",
-                "index":1
+                'text': '7 ' + departures.get('7'),
+                'icon': 'a6175',
+                'index':1
               }
             ]
           })
       })
 })}
 
-app.get("/departures", function (request, response) {
+app.get('/departures', function (request, response) {
   if (departureCache.get('departures')) {
     response.send(departureCache.get('departures'));
   } else {
@@ -64,11 +68,11 @@ app.get("/departures", function (request, response) {
     .catch(error => 
       response.json(
         {
-          "frames": [
+          'frames': [
             {
-              "text": "Error",
-              "icon": "a6175",
-              "index":0
+              'text': 'Error',
+              'icon': 'a6175',
+              'index':0
             }
           ]
         }))
@@ -79,7 +83,7 @@ app.get("/departures", function (request, response) {
 let vcapLocal;
 try {
   vcapLocal = require('./vcap-local.json');
-  console.log("Loaded local VCAP", vcapLocal);
+  console.log('Loaded local VCAP', vcapLocal);
 } catch (e) { }
 
 const appEnvOpts = vcapLocal ? { vcap: vcapLocal} : {}
@@ -87,6 +91,6 @@ const appEnv = cfenv.getAppEnv(appEnvOpts);
 
 let port = process.env.PORT || 3000
 app.listen(port, function() {
-    console.log("To view your app, open this link in your browser: http://localhost:" + port);
+    console.log('To view your app, open this link in your browser: http://localhost:' + port);
 });
 
