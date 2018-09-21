@@ -7,7 +7,7 @@ let request = Promise.promisify(require('request'));
 const NodeCache = require('node-cache');
 const departureCache = new NodeCache({stdTTL: 60, checkperiod: 120});
 
-const requestString = 'http://efa2.naldo.de/naldo/XSLT_DM_REQUEST?language=de&useRealtime=1&mode=direct&type_dm=stop&name_dm=${%20Reutlingen%20}%20${%20Breitenbach%20}&mId=efa_rc2&outputFormat=JSON&line=tub:07002:%20:H:j17&line=tub:07007:%20:R:j17&limit=10;';
+const requestString = 'http://efa2.naldo.de/naldo/XSLT_DM_REQUEST?language=de&useRealtime=1&mode=direct&type_dm=stop&name_dm=${%20Reutlingen%20}%20${%20Im%20Dorf%20}&mId=efa_rc2&outputFormat=JSON&line=tub:07002:%20:H:j17&line=tub:07007:%20:R:j17&limit=10;';
 
 function extractTime (departure) {
   let depTime = departure.realDateTime || departure.dateTime;

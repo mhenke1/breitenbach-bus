@@ -1,4 +1,4 @@
-Bus Departures for Reutlingen Breitenbach stop read from EFA to be consumed by LaMetric Clock
+Bus Departures for Reutlingen "im Dorf" stop read from EFA to be consumed by LaMetric Clock
 
 OutputFormat:
 ```
