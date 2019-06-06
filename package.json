@@ -11,15 +11,15 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "bluebird": "~3.5.3",
+    "bluebird": "~3.5.5",
     "cfenv": "^1.2.2",
-    "express": "~4.16.4",
+    "express": "~4.17.1",
     "node-cache": "~4.2.0",
     "request": "~2.88.0"
   },
   "author": "Martin Henke",
   "devDependencies": {
-    "eslint": "~5.13.0",
+    "eslint": "~5.16.0",
     "eslint-config-loopback": "~13.0.0"
   }
 }
