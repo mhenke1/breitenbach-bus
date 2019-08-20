@@ -2,4 +2,4 @@
 applications:
  - name: breitenbach-bus
    random-route: true
-   memory: 256M
+   memory: 128M
