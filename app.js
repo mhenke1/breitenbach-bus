@@ -39,6 +39,10 @@ function getDepartures () {
       .then((response) => {
         let answer = JSON.parse(response.body);
         let departures = extractDepartures(answer.departureList);
+        let line12Departures = "FÄHRT HEUTE NICHT"
+        if (departures.get('12')) {
+          line12Departures = departures.get('12')
+        }
         resolve(
           {
             'frames': [
@@ -48,7 +52,7 @@ function getDepartures () {
                 'index': 0,
               },
               {
-                'text': '12 ' + departures.get('12'),
+                'text': '12 ' + line12Departures,
                 'icon': 'a6175',
                 'index': 1,
               },

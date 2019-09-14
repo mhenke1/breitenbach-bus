@@ -19,7 +19,7 @@
   },
   "author": "Martin Henke",
   "devDependencies": {
-    "eslint": "~6.3.0",
+    "eslint": "~6.4.0",
     "eslint-config-loopback": "~13.1.0"
   }
 }
