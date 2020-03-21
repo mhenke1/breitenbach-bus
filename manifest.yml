@@ -1,5 +1,5 @@
 ---
 applications:
- - name: breitenbach-bus
+ - name: bus-im-dorf
    random-route: true
    memory: 128M
