@@ -1,7 +1,7 @@
 {
   "name": "bus-im-dorf",
   "main": "app.js",
-  "description": "Breitenbach Departures",
+  "description": "Bus Departures Reutlingen Im Dorf",
   "version": "0.1.2",
   "private": false,
   "engines": {
