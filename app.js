@@ -3,7 +3,7 @@
 let express = require('express');
 let app = express();
 let Promise = require('bluebird');
-let request = Promise.promisify(require('request'));
+let needle = require('needle');
 const NodeCache = require('node-cache');
 const departureCache = new NodeCache({stdTTL: 60, checkperiod: 120});
 
@@ -35,7 +35,7 @@ function extractDepartures (departuresList) {
 
 function getDepartures () {
   return new Promise((resolve, reject) => {
-    request(requestString)
+    needle('get', requestString)
       .then((response) => {
         let answer = JSON.parse(response.body);
         let departures = extractDepartures(answer.departureList);
