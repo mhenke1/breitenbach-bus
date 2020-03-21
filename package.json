@@ -5,21 +5,21 @@
   "version": "0.1.2",
   "private": false,
   "engines": {
-    "node": "10.*"
+    "node": "12.*"
   },
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "bluebird": "~3.5.5",
+    "bluebird": "~3.7.2",
     "cfenv": "^1.2.2",
     "express": "~4.17.1",
-    "node-cache": "~4.2.1",
-    "request": "~2.88.0"
+    "node-cache": "~5.1.0",
+    "request": "~2.88.2"
   },
   "author": "Martin Henke",
   "devDependencies": {
-    "eslint": "~6.4.0",
+    "eslint": "~6.8.0",
     "eslint-config-loopback": "~13.1.0"
   }
 }
