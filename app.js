@@ -6,6 +6,7 @@ let Promise = require('bluebird');
 let needle = require('needle');
 const NodeCache = require('node-cache');
 const departureCache = new NodeCache({stdTTL: 60, checkperiod: 120});
+const lines=['2','12','7']
 
 const requestString = 'http://efa2.naldo.de/naldo/XSLT_DM_REQUEST?language=de&useRealtime=1&mode=direct&type_dm=stop&name_dm=${%20Reutlingen%20}%20${%20Im%20Dorf%20}&mId=efa_rc2&outputFormat=JSON&line=tub:07002:%20:H:j17&line=tub:07007:%20:H:j17&line=tub:07012:%20:R:j17&limit=20;';
 
@@ -24,15 +25,12 @@ function extractDeparturesForLine(departuresList, line) {
   return lineDeps
 }
 
-function extractDepartures (departuresList) {
+function extractDepartures (departuresList, lines) {
   let departures = new Map();
-  let line2Deps = extractDeparturesForLine(departuresList,'2')
-  departures.set('2', line2Deps);
-  let line12Deps = extractDeparturesForLine(departuresList,'12')
-  departures.set('12', line12Deps);
-  let line7Deps = extractDeparturesForLine(departuresList,'7')
-  departures.set('7', line7Deps);
-
+  lines.forEach(line => {
+    let lineDeps = extractDeparturesForLine(departuresList, line)
+    departures.set(line, lineDeps);
+  });
   return departures;
 }
 
@@ -41,7 +39,7 @@ function getDepartures () {
     needle('get', requestString)
       .then((response) => {
         let answer = JSON.parse(response.body);
-        let departures = extractDepartures(answer.departureList);
+        let departures = extractDepartures(answer.departureList, lines);
         let line12Departures = "FÄHRT HEUTE NICHT"
         if (departures.get('12')) {
           line12Departures = departures.get('12')
