@@ -18,16 +18,19 @@ function extractTime (departure) {
   return depTime.hour + ':' + minute;
 }
 
+function extractDeparturesForLine(departuresList, line) {
+  let lineDeps = departuresList.filter((dep) => (dep.servingLine.number === line))
+    .slice(0, 2).map((dep) => extractTime(dep)).join(' ');
+  return lineDeps
+}
+
 function extractDepartures (departuresList) {
   let departures = new Map();
-  let line2Deps = departuresList.filter((dep) => (dep.servingLine.number === '2'))
-    .slice(0, 2).map((dep) => extractTime(dep)).join(' ');
+  let line2Deps = extractDeparturesForLine(departuresList,'2')
   departures.set('2', line2Deps);
-  let line12Deps = departuresList.filter((dep) => (dep.servingLine.number === '12'))
-    .slice(0, 2).map((dep) => extractTime(dep)).join(' ');  
-  departures.set('12', line12Deps);  
-  let line7Deps = departuresList.filter((dep) => (dep.servingLine.number === '7'))
-    .slice(0, 2).map((dep) => extractTime(dep)).join(' ');
+  let line12Deps = extractDeparturesForLine(departuresList,'12')
+  departures.set('12', line12Deps);
+  let line7Deps = extractDeparturesForLine(departuresList,'7')
   departures.set('7', line7Deps);
 
   return departures;
