@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "bluebird": "~3.7.2",
-    "cfenv": "^1.2.2",
+    "cfenv": "^1.2.4",
     "express": "~4.17.1",
-    "needle": "^2.5.0",
-    "node-cache": "~5.1.0"
+    "needle": "^2.6.0",
+    "node-cache": "~5.1.2"
   },
   "author": "Martin Henke",
   "devDependencies": {
-    "eslint": "~7.1.0",
+    "eslint": "~7.26.0",
     "eslint-config-loopback": "~13.1.0"
   }
 }
